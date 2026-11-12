@@ -1,0 +1,23 @@
+# MPLAB X user-specific settings and generated output
+nbproject/private/
+.generated_files/
+build/
+dist/
+out/
+_build/
+Package-*/
+
+# Generated compiler and linker files
+*.o
+*.d
+*.elf
+*.hex
+*.cof
+*.map
+*.lst
+
+# Local editor and operating system files
+.DS_Store
+Thumbs.db
+.vscode/
+!.vscode/ECE118_FinalProject.mplab.json

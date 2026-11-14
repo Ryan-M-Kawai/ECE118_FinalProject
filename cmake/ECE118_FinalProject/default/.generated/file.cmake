@@ -16,6 +16,7 @@ foreach(source_file ${ECE118_FinalProject_default_default_XC32_FILE_TYPE_assembl
 endforeach()
 
 set(ECE118_FinalProject_default_default_XC32_FILE_TYPE_compile
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../../ECE118/tape_detector.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../AD.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../BOARD.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../ES_CheckEvents.c"
@@ -27,6 +28,7 @@ set(ECE118_FinalProject_default_default_XC32_FILE_TYPE_compile
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../ES_Timers.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../IO_Ports.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../LED.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../Motor.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../RC_Servo.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../TemplateES_Main.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../TemplateEventChecker.c"
@@ -45,7 +47,7 @@ set_source_files_properties(${ECE118_FinalProject_default_default_XC32_FILE_TYPE
 set(ECE118_FinalProject_default_default_XC32_FILE_TYPE_link)
 
 # The linker script used for the build.
-set(ECE118_FinalProject_default_LINKER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../ECE118/bootloader320.ld")
+set(ECE118_FinalProject_default_LINKER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/../../../../ECE118/bootloader320.ld")
 set(ECE118_FinalProject_default_image_name "default.elf")
 set(ECE118_FinalProject_default_image_base_name "default")
 

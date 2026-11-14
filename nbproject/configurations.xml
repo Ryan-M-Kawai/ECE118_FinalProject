@@ -32,6 +32,7 @@
       <itemPath>TemplateHSM.h</itemPath>
       <itemPath>TemplateService.h</itemPath>
       <itemPath>TemplateSubHSM.h</itemPath>
+      <itemPath>../ECE118/tape_detector.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -69,6 +70,8 @@
       <itemPath>TemplateHSM.c</itemPath>
       <itemPath>TemplateService.c</itemPath>
       <itemPath>TemplateSubHSM.c</itemPath>
+      <itemPath>../../../ECE118/tape_detector.c</itemPath>
+      <itemPath>Motor.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -80,7 +83,7 @@
     <conf name="default" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
-        <targetDevice>MEC1404</targetDevice>
+        <targetDevice>PIC32MX320F128H</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
         <platformTool>noID</platformTool>
@@ -89,7 +92,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="MECxxxx_DFP" vendor="Microchip" version="1.4.61"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.7.380"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -134,7 +137,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="expand-pragma-config" value="false"/>
-        <property key="extra-include-directories" value="..\..\..\ECE118"/>
+        <property key="extra-include-directories"
+                  value="..\ECE118\include;..\ECE118\templates;..\ECE118\src"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -251,7 +255,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories" value="..\..\..\ECE118"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>

@@ -46,15 +46,15 @@ endif()
 
 
 # Main target for this project
-add_executable(ECE118_FinalProject_default_image_r_kkloEx ${ECE118_FinalProject_default_library_list})
+add_executable(ECE118_FinalProject_default_image_LfIUImQI ${ECE118_FinalProject_default_library_list})
 
-set_target_properties(ECE118_FinalProject_default_image_r_kkloEx PROPERTIES
+set_target_properties(ECE118_FinalProject_default_image_LfIUImQI PROPERTIES
     OUTPUT_NAME "default"
     SUFFIX ".elf"
     RUNTIME_OUTPUT_DIRECTORY "${ECE118_FinalProject_default_output_dir}")
-target_link_libraries(ECE118_FinalProject_default_image_r_kkloEx PRIVATE ${ECE118_FinalProject_default_default_XC32_FILE_TYPE_link})
+target_link_libraries(ECE118_FinalProject_default_image_LfIUImQI PRIVATE ${ECE118_FinalProject_default_default_XC32_FILE_TYPE_link})
 # Add the link options from the rule file.
-ECE118_FinalProject_default_link_rule( ECE118_FinalProject_default_image_r_kkloEx)
+ECE118_FinalProject_default_link_rule( ECE118_FinalProject_default_image_LfIUImQI)
 
 # Add bin2hex target for converting built file to a .hex file.
 string(REGEX REPLACE [.]elf$ .hex ECE118_FinalProject_default_image_name_hex ${ECE118_FinalProject_default_image_name})
@@ -63,7 +63,7 @@ add_custom_target(ECE118_FinalProject_default_Bin2Hex ALL
     DEPENDS "${ECE118_FinalProject_default_output_dir}/${ECE118_FinalProject_default_image_name}"
     BYPRODUCTS ${ECE118_FinalProject_default_output_dir}/${ECE118_FinalProject_default_image_name_hex}
     COMMENT "Convert built file to .hex")
-add_dependencies(ECE118_FinalProject_default_Bin2Hex ECE118_FinalProject_default_image_r_kkloEx)
+add_dependencies(ECE118_FinalProject_default_Bin2Hex ECE118_FinalProject_default_image_LfIUImQI)
 
 
 

@@ -33,6 +33,7 @@
       <itemPath>TemplateService.h</itemPath>
       <itemPath>TemplateSubHSM.h</itemPath>
       <itemPath>../ECE118/tape_detector.h</itemPath>
+      <itemPath>../ECE118/include/Motor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

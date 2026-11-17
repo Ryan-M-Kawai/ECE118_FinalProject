@@ -4,6 +4,7 @@
 #include <AD.h>
 #define MOTOR_SPEED 600
 
+//PWM_PORTY12 doesnt work.
 #define MOTOR_PWM_FL PWM_PORTZ06 // front left 1 in runmotor
 #define MOTOR_PWM_FR PWM_PORTY10 // front right 2 in runmotor
 #define MOTOR_PWM_BL PWM_PORTX11 // back left 3 in runmotor
@@ -71,67 +72,103 @@ void Motors_Init()
     PWM_AddPins(MOTOR_PWM_FL | MOTOR_PWM_FR | MOTOR_PWM_BR | MOTOR_PWM_BL);
     PWM_SetFrequency(PWM_1KHZ);
 }
-void runMotor(int motor, int speed, int direction)
-// 1 0 forward
-// 0 1 backward
+//void runMotor(int motor, int speed, int direction)
+//// 1 0 forward
+//// 0 1 backward
+//{
+//    switch (motor)
+//    {
+//        case 1: // front left
+//            if (direction == 1)
+//            {
+//                IO_PortsSetPortBits(FRONT_MOTORS_IO_PIN, IO1_Input2);
+//                IO_PortsClearPortBits(FRONT_MOTORS_IO_PIN, IO1_Input1);
+//            }
+//            else
+//            {
+//                IO_PortsClearPortBits(FRONT_MOTORS_IO_PIN, IO1_Input1);
+//                IO_PortsSetPortBits(FRONT_MOTORS_IO_PIN, IO1_Input2);
+//            }
+//            PWM_SetDutyCycle(MOTOR_PWM_FL, speed);
+//            break;
+//
+//        case 2: // back left
+//            if (direction == 1)
+//            {
+//                IO_PortsSetPortBits(BACK_MOTORS_IO_PIN, IO1_Input2);
+//                IO_PortsClearPortBits(BACK_MOTORS_IO_PIN, IO1_Input1);
+//            }
+//            else
+//            {
+//                IO_PortsClearPortBits(BACK_MOTORS_IO_PIN, IO2_Input2);
+//                IO_PortsSetPortBits(BACK_MOTORS_IO_PIN, IO2_Input1);
+//            }
+//            PWM_SetDutyCycle(MOTOR_PWM_BL, speed);
+//            break;
+//        case 3: // front right
+//            if (direction == 1)
+//            {
+//                IO_PortsClearPortBits(FRONT_MOTORS_IO_PIN, IO2_Input1);
+//                IO_PortsSetPortBits(FRONT_MOTORS_IO_PIN, IO2_Input2);
+//            }
+//            else
+//            {
+//                IO_PortsSetPortBits(FRONT_MOTORS_IO_PIN, IO2_Input2);
+//                IO_PortsClearPortBits(FRONT_MOTORS_IO_PIN, IO2_Input1);
+//            }
+//            PWM_SetDutyCycle(MOTOR_PWM_FR, speed);
+//            break;
+//        case 4: // back right
+//            if (direction == 1)
+//            {
+//                IO_PortsClearPortBits(BACK_MOTORS_IO_PIN, IO2_Input1);
+//                IO_PortsSetPortBits(BACK_MOTORS_IO_PIN, IO2_Input2 );
+//            }
+//            else
+//            {
+//                IO_PortsSetPortBits(BACK_MOTORS_IO_PIN, IO2_Input2);
+//                IO_PortsClearPortBits(BACK_MOTORS_IO_PIN, IO2_Input1);
+//            }
+//            PWM_SetDutyCycle(MOTOR_PWM_BR, speed);
+//            break;
+//        default:
+//            break;
+//    }
+//}
+static void setDirection(int8_t port, uint16_t in1, uint16_t in2, int dir)
 {
-    switch (motor)
-    {
-        case 1: // front left
-            if (direction == 1)
-            {
-                IO_PortsSetPortBits(FRONT_MOTORS_IO_PIN, IO1_Input2);
-                IO_PortsClearPortBits(FRONT_MOTORS_IO_PIN, IO1_Input1);
-            }
-            else
-            {
-                IO_PortsClearPortBits(FRONT_MOTORS_IO_PIN, IO1_Input1);
-                IO_PortsSetPortBits(FRONT_MOTORS_IO_PIN, IO1_Input2);
-            }
-            PWM_SetDutyCycle(MOTOR_PWM_FL, speed);
-            break;
+    if (dir == 1) {                       // forward
+        IO_PortsClearPortBits(port, in1);
+        IO_PortsSetPortBits(port, in2);
+    } else {                              // reverse
+        IO_PortsClearPortBits(port, in2);
+        IO_PortsSetPortBits(port, in1);
+    }
+}
 
-        case 2: // back left
-            if (direction == 1)
-            {
-                IO_PortsSetPortBits(BACK_MOTORS_IO_PIN, IO1_Input2);
-                IO_PortsClearPortBits(BACK_MOTORS_IO_PIN, IO1_Input1);
-            }
-            else
-            {
-                IO_PortsClearPortBits(BACK_MOTORS_IO_PIN, IO2_Input2);
-                IO_PortsSetPortBits(BACK_MOTORS_IO_PIN, IO2_Input1);
-            }
-            PWM_SetDutyCycle(MOTOR_PWM_BL, speed);
-            break;
-        case 3: // front right
-            if (direction == 1)
-            {
-                IO_PortsClearPortBits(FRONT_MOTORS_IO_PIN, IO2_Input1);
-                IO_PortsSetPortBits(FRONT_MOTORS_IO_PIN, IO2_Input2);
-            }
-            else
-            {
-                IO_PortsSetPortBits(FRONT_MOTORS_IO_PIN, IO2_Input2);
-                IO_PortsClearPortBits(FRONT_MOTORS_IO_PIN, IO2_Input1);
-            }
-            PWM_SetDutyCycle(MOTOR_PWM_FR, speed);
-            break;
-        case 4: // back right
-            if (direction == 1)
-            {
-                IO_PortsClearPortBits(BACK_MOTORS_IO_PIN, IO2_Input1);
-                IO_PortsSetPortBits(BACK_MOTORS_IO_PIN, IO2_Input2 );
-            }
-            else
-            {
-                IO_PortsSetPortBits(BACK_MOTORS_IO_PIN, IO2_Input2);
-                IO_PortsClearPortBits(BACK_MOTORS_IO_PIN, IO2_Input1);
-            }
-            PWM_SetDutyCycle(MOTOR_PWM_BR, speed);
-            break;
-        default:
-            break;
+// 1 2
+// 3 4   (FL FR / BL BR)
+void runMotor(int motor, int speed, int direction)
+{
+    switch (motor) {
+    case 1: // front left
+        setDirection(FRONT_MOTORS_IO_PIN, IO1_Input1, IO1_Input2, direction);
+        PWM_SetDutyCycle(MOTOR_PWM_FL, speed);
+        break;
+    case 2: // front right
+        setDirection(FRONT_MOTORS_IO_PIN, IO2_Input1, IO2_Input2, direction);
+        PWM_SetDutyCycle(MOTOR_PWM_FR, speed);
+        break;
+    case 3: // back left
+        setDirection(BACK_MOTORS_IO_PIN, IO1_Input1, IO1_Input2, direction);
+        PWM_SetDutyCycle(MOTOR_PWM_BL, speed);
+        break;
+    case 4: // back right
+        setDirection(BACK_MOTORS_IO_PIN, IO2_Input1, IO2_Input2, direction);
+        PWM_SetDutyCycle(MOTOR_PWM_BR, speed);
+        break;
+    default:
+        break;
     }
 }
 // 1 2

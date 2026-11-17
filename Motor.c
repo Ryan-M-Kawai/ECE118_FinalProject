@@ -60,8 +60,8 @@
 //
 //    return 0;
 //}
-void Motors_Init()
-{
+
+void Motors_Init() {
     BOARD_Init();
     PWM_Init();
 
@@ -135,12 +135,12 @@ void Motors_Init()
 //            break;
 //    }
 //}
-static void setDirection(int8_t port, uint16_t in1, uint16_t in2, int dir)
-{
-    if (dir == 1) {                       // forward
+
+static void setDirection(int8_t port, uint16_t in1, uint16_t in2, int dir) {
+    if (dir == 1) { // forward
         IO_PortsClearPortBits(port, in1);
         IO_PortsSetPortBits(port, in2);
-    } else {                              // reverse
+    } else { // reverse
         IO_PortsClearPortBits(port, in2);
         IO_PortsSetPortBits(port, in1);
     }
@@ -148,96 +148,96 @@ static void setDirection(int8_t port, uint16_t in1, uint16_t in2, int dir)
 
 // 1 2
 // 3 4   (FL FR / BL BR)
-void runMotor(int motor, int speed, int direction)
-{
+
+void runMotor(int motor, int speed, int direction) {
     switch (motor) {
-    case 1: // front left
-        setDirection(FRONT_MOTORS_IO_PIN, IO1_Input1, IO1_Input2, direction);
-        PWM_SetDutyCycle(MOTOR_PWM_FL, speed);
-        break;
-    case 2: // front right
-        setDirection(FRONT_MOTORS_IO_PIN, IO2_Input1, IO2_Input2, direction);
-        PWM_SetDutyCycle(MOTOR_PWM_FR, speed);
-        break;
-    case 3: // back left
-        setDirection(BACK_MOTORS_IO_PIN, IO1_Input1, IO1_Input2, direction);
-        PWM_SetDutyCycle(MOTOR_PWM_BL, speed);
-        break;
-    case 4: // back right
-        setDirection(BACK_MOTORS_IO_PIN, IO2_Input1, IO2_Input2, direction);
-        PWM_SetDutyCycle(MOTOR_PWM_BR, speed);
-        break;
-    default:
-        break;
+        case 1: // front left
+            setDirection(FRONT_MOTORS_IO_PIN, IO1_Input1, IO1_Input2, direction);
+            PWM_SetDutyCycle(MOTOR_PWM_FL, speed);
+            break;
+        case 2: // front right
+            setDirection(FRONT_MOTORS_IO_PIN, IO2_Input1, IO2_Input2, direction);
+            PWM_SetDutyCycle(MOTOR_PWM_FR, speed);
+            break;
+        case 3: // back left
+            setDirection(BACK_MOTORS_IO_PIN, IO1_Input1, IO1_Input2, direction);
+            PWM_SetDutyCycle(MOTOR_PWM_BL, speed);
+            break;
+        case 4: // back right
+            setDirection(BACK_MOTORS_IO_PIN, IO2_Input1, IO2_Input2, direction);
+            PWM_SetDutyCycle(MOTOR_PWM_BR, speed);
+            break;
+        default:
+            break;
     }
 }
 // 1 2
 // 3 4
-void forward(int speed)
-{
+
+void forward(int speed) {
     runMotor(1, speed, 1);
     runMotor(2, speed, 1);
-    runMotor(3, speed,1);
+    runMotor(3, speed, 1);
     runMotor(4, speed, 1);
 }
-void backward(int speed)
-{
+
+void backward(int speed) {
     runMotor(1, speed, 0);
     runMotor(2, speed, 0);
     runMotor(3, speed, 0);
     runMotor(4, speed, 0);
 }
-void turnLeft(int speed)
-{
+
+void turnLeft(int speed) {
     runMotor(1, speed, 0);
     runMotor(2, speed, 1);
     runMotor(3, speed, 0);
     runMotor(4, speed, 1);
 }
-void turnRight(int speed)
-{
+
+void turnRight(int speed) {
     runMotor(1, speed, 1);
     runMotor(2, speed, 0);
     runMotor(3, speed, 1);
     runMotor(4, speed, 0);
 }
-void strafeLeft(int speed)
-{
+
+void strafeLeft(int speed) {
     runMotor(1, speed, 0);
     runMotor(2, speed, 1);
     runMotor(3, speed, 1);
     runMotor(4, speed, 0);
 }
-void strafeRight(int speed)
-{
+
+void strafeRight(int speed) {
     runMotor(1, speed, 1);
     runMotor(2, speed, 0);
     runMotor(3, speed, 0);
     runMotor(4, speed, 1);
 }
-void strafeForwardLeft(int speed)
-{
+
+void strafeForwardLeft(int speed) {
     runMotor(2, speed, 1);
     runMotor(3, speed, 1);
 }
-void strafeForwardRight(int speed)
-{
+
+void strafeForwardRight(int speed) {
     runMotor(1, speed, 1);
     runMotor(4, speed, 1);
 }
-void strafeBackwardLeft(int speed)
-{
+
+void strafeBackwardLeft(int speed) {
     runMotor(1, speed, 0);
-   
+
     runMotor(4, speed, 0);
 }
-void strafeBackwardRight(int speed)
-{
+
+void strafeBackwardRight(int speed) {
     runMotor(2, speed, 0);
     runMotor(3, speed, 0);
 }
-void stopMotors()
-{
+
+void stopMotors() {
     PWM_SetDutyCycle(MOTOR_PWM_FL, 0);
     PWM_SetDutyCycle(MOTOR_PWM_FR, 0);
     PWM_SetDutyCycle(MOTOR_PWM_BL, 0);

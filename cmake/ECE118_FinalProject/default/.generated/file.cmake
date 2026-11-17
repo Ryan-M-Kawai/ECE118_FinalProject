@@ -16,6 +16,7 @@ foreach(source_file ${ECE118_FinalProject_default_default_XC32_FILE_TYPE_assembl
 endforeach()
 
 set(ECE118_FinalProject_default_default_XC32_FILE_TYPE_compile
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../../ECE118/bumpers.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../../ECE118/tape_detector.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../AD.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../BOARD.c"
@@ -36,6 +37,7 @@ set(ECE118_FinalProject_default_default_XC32_FILE_TYPE_compile
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../TemplateHSM.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../TemplateService.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../TemplateSubHSM.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../bumpers.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../newmainXC16.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../pwm.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../roach.c"

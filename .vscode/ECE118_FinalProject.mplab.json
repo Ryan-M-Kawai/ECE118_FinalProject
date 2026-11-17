@@ -86,11 +86,20 @@
         {
             "name": "Project files",
             "files": [
-                "../../../ECE118/include/*",
-                "*",
-                "../../../ECE118/*"
-            ],
-            "encoding": "ISO-8859-1"
+                {
+                    "include": "../../../ECE118/include/*",
+                    "encoding": "ISO-8859-1"
+                },
+                {
+                    "include": "*",
+                    "encoding": "ISO-8859-1"
+                },
+                {
+                    "include": "../../../ECE118/*",
+                    "encoding": "ISO-8859-1"
+                },
+                ""
+            ]
         }
     ]
 }

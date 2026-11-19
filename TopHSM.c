@@ -29,7 +29,7 @@
 // ******************************************************************************/
 
 #include "ES_Configure.h"
-//#include "ES_Framework.h"
+#include "ES_Framework.h"
 #include "EventChecker.h"
 #include "BOARD.h"
 #include "TopHSM.h"
@@ -187,9 +187,6 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
                     break;
                 
                 case TAPE_DETECTED:
-                    switch(ThisEvent.EventParam){
-                       ;
-                    }
                     nextState = ClassifyTapeState;
                     makeTransition = TRUE;
                     ThisEvent.EventType = ES_NO_EVENT;
@@ -208,6 +205,7 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
             switch (ThisEvent.EventType) {
                 case ES_ENTRY:
                     // start rotating to classify tape
+                    
                     break;
                 case ES_EXIT:
                     stopMotors();

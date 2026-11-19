@@ -5,6 +5,7 @@
 #include "ES_Framework.h"
 #include <Motor.h>
 #include <bumpers.h>
+#include <tape_detector.h>
 void main(void)
 {
     ES_Return_t ErrorType;

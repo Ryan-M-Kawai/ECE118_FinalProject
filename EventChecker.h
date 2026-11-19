@@ -46,6 +46,13 @@ typedef enum{
     SENSOR_ML,
     SENSOR_CENTER,
 }TapeParam_t;
+typedef enum{
+    FR,
+    FL,
+    BR,
+    BL,
+
+}BumperParam_t;
 
 /*******************************************************************************
  * PUBLIC FUNCTION PROTOTYPES                                                  *
@@ -57,6 +64,12 @@ uint8_t IR_Changed_FR(void);
 uint8_t IR_Changed_MR(void);
 uint8_t IR_Changed_BR(void);
 uint8_t IR_Changed_All(void);
+
+uint8_t BL_Bumper(void);
+uint8_t BR_Bumper(void);
+uint8_t FL_Bumper(void);
+uint8_t FR_Bumper(void);
+uint8_t check_bumpers(void);
 /**
  * @Function TemplateCheckBattery(void)
  * @param none

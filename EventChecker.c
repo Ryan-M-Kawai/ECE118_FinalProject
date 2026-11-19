@@ -32,22 +32,17 @@
 #include "serial.h"
 #include "AD.h"
 #include "tape_detector.h"
+#include "bumpers.h"
 #include "TemplateService.h"
 /*******************************************************************************
  * MODULE #DEFINES                                                             *
  ******************************************************************************/
 #define BATTERY_DISCONNECT_THRESHOLD 175
-
 #define IR_SENSOR_PIN_FL AD_PORTV3 
-
 #define IR_SENSOR_PIN_ML AD_PORTV4
-
 #define IR_SENSOR_PIN_BL AD_PORTV6
-
 #define IR_SENSOR_PIN_FR AD_PORTV5
-
 #define IR_SENSOR_PIN_BR AD_PORTV7
-
 #define IR_SENSOR_PIN_MR AD_PORTV8
 #define IR_SENSOR_PIN_M AD_PORTW3
 
@@ -55,6 +50,14 @@
 #define IR_THRESH_LOW   150   // must drop below this to count as "below"
 #define IR_MAX_PINS      8
 #define DEBOUNCE_MS 10
+
+#define FR_BUMPER_PIN AD_PORTW6
+#define FL_BUMPER_PIN AD_PORTW5
+#define BR_BUMPER_PIN AD_PORTW7
+#define BL_BUMPER_PIN AD_PORTW8
+#define BUMPER_HIGH 700
+#define BUMPER_LOW 300
+
 /*******************************************************************************
  * EVENTCHECKER_TEST SPECIFIC CODE                                                             *
  ******************************************************************************/
@@ -145,9 +148,7 @@ uint8_t IR_Changed_FL(void) {
         thisEvent.EventParam = SENSOR_FL;
         returnVal = TRUE;
     }
-    if (returnVal) {
-        PostTopLevelHSM(thisEvent);
-    }
+  
     return returnVal;
 }
 
@@ -170,9 +171,7 @@ uint8_t IR_Changed_ML(void) {
         thisEvent.EventParam = SENSOR_ML;
         returnVal = TRUE;
     }
-    if (returnVal) {
-        PostTopLevelHSM(thisEvent);
-    }
+    
     return returnVal;
 }
 
@@ -195,9 +194,7 @@ uint8_t IR_Changed_BL(void) {
         thisEvent.EventParam = SENSOR_BL;
         returnVal = TRUE;
     }
-    if (returnVal) {
-        PostTopLevelHSM(thisEvent);
-    }
+  
     return returnVal;
 }
 
@@ -220,9 +217,7 @@ uint8_t IR_Changed_FR(void) {
         thisEvent.EventParam = SENSOR_FR;
         returnVal = TRUE;
     }
-    if (returnVal) {
-        PostTopLevelHSM(thisEvent);
-    }
+    
     return returnVal;
 }
 
@@ -245,9 +240,7 @@ uint8_t IR_Changed_MR(void) {
         thisEvent.EventParam = SENSOR_MR;
         returnVal = TRUE;
     }
-    if (returnVal) {
-        PostTopLevelHSM(thisEvent);
-    }
+
     return returnVal;
 }
 
@@ -270,9 +263,7 @@ uint8_t IR_Changed_BR(void) {
         thisEvent.EventParam = SENSOR_BR;
         returnVal = TRUE;
     }
-    if (returnVal) {
-        PostTopLevelHSM(thisEvent);
-    }
+    
     return returnVal;
 }
 
@@ -295,9 +286,6 @@ uint8_t IR_Changed_Center(void) {
         thisEvent.EventParam = SENSOR_CENTER;
         returnVal = TRUE;
     }
-    if (returnVal) {
-        PostTopLevelHSM(thisEvent);
-    }
     return returnVal;
 }
 
@@ -308,7 +296,134 @@ uint8_t IR_Changed_All(void) {
     IR_Changed_FR();
     IR_Changed_MR();
     IR_Changed_BR();
+}
+uint8_t FR_Bumper(void){
+    ES_Event bump_event;
+    static int prev = 0;
+    static int count = 0;
+    int curr = (int)AD_ReadADPin(FR_BUMPER_PIN)>BUMPER_HIGH;
+        
+    uint8_t returnVal = FALSE;
+    if (curr == prev) {
+        count = 0;
+    } else {
+        count++;
+        if (count >= DEBOUNCE_MS) {
+            prev = curr;
+            count = 0;
+            if (curr) {
+                bump_event.EventType = BUMP_DETECTED;
+                bump_event.EventParam = FR;
+                returnVal = TRUE;
+            }
+            else{
+                bump_event.EventType = BUMP_LOST;
+                                bump_event.EventParam = FR;
+returnVal = TRUE;
+            }      
+            
+        }
+    }
+    return returnVal;
+}
+uint8_t FL_Bumper(void){
+    static int prev = 0;
+    static int count = 0;
+        ES_Event bump_event;
+    uint8_t returnVal = FALSE;
 
+    int curr = (int)AD_ReadADPin(FL_BUMPER_PIN)>BUMPER_HIGH;
+        
+
+    if (curr == prev) {
+        count = 0;
+    } else {
+        count++;
+        if (count >= DEBOUNCE_MS) {
+            prev = curr;
+            count = 0;
+            if (curr) {
+                bump_event.EventType = BUMP_DETECTED;
+                bump_event.EventParam = FL;
+                returnVal = TRUE;
+            }
+            else{
+                bump_event.EventType = BUMP_LOST;
+                bump_event.EventParam = FL;
+                returnVal = TRUE;
+            }      
+            
+        }
+    }
+        return returnVal;
+}
+uint8_t BR_Bumper(void){
+    static int prev = 0;
+    static int count = 0;
+     ES_Event bump_event;
+      uint8_t returnVal = FALSE;
+
+    int curr = (int)AD_ReadADPin(BR_BUMPER_PIN)>BUMPER_HIGH;
+
+
+    if (curr == prev) {
+        count = 0;
+    } else {
+        count++;
+        if (count >= DEBOUNCE_MS) {
+            prev = curr;
+            count = 0;
+            if (curr) {
+                bump_event.EventType = BUMP_DETECTED;
+                bump_event.EventParam = BR;
+                returnVal = TRUE;
+                
+            }
+            else{
+                bump_event.EventType = BUMP_LOST;
+                bump_event.EventParam = BR;
+                returnVal = TRUE;
+            }      
+            
+        }
+    }
+    return returnVal;
+}
+uint8_t BL_Bumper(void){
+         ES_Event bump_event;
+uint8_t returnVal = FALSE;
+    static int prev = 0;
+    static int count = 0;
+    int curr = (int)AD_ReadADPin(BR_BUMPER_PIN)>BUMPER_HIGH;
+      
+
+    if (curr == prev) {
+        count = 0;
+    } else {
+        count++;
+        if (count >= DEBOUNCE_MS) {
+            prev = curr;
+            count = 0;
+            if (curr) {
+                bump_event.EventType = BUMP_DETECTED;
+                bump_event.EventParam = BL;
+                returnVal = TRUE;
+            }
+            else{
+                bump_event.EventType = BUMP_LOST;
+                bump_event.EventParam = BL;
+                returnVal = TRUE;
+            }      
+            
+        }
+    }
+    return returnVal;
+}
+uint8_t check_bumpers(void){
+    FR_Bumper();
+    FL_Bumper();
+    BR_Bumper();
+    BL_Bumper();
 }
 /* 
  * The Test Harness for the event checkers is conditionally compiled using

@@ -27,14 +27,15 @@
       <itemPath>../../../ECE118/include/serial.h</itemPath>
       <itemPath>../../../ECE118/include/timers.h</itemPath>
       <itemPath>ES_Configure.h</itemPath>
-      <itemPath>TemplateEventChecker.h</itemPath>
       <itemPath>TemplateFSM.h</itemPath>
-      <itemPath>TemplateHSM.h</itemPath>
       <itemPath>TemplateService.h</itemPath>
       <itemPath>TemplateSubHSM.h</itemPath>
       <itemPath>../ECE118/tape_detector.h</itemPath>
       <itemPath>../ECE118/include/Motor.h</itemPath>
       <itemPath>../ECE118/include/bumpers.h</itemPath>
+      <itemPath>../ECE118/include/solenoidTest.h</itemPath>
+      <itemPath>TopHSM.h</itemPath>
+      <itemPath>EventChecker.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -67,14 +68,15 @@
       <itemPath>serial.c</itemPath>
       <itemPath>timers.c</itemPath>
       <itemPath>TemplateES_Main.c</itemPath>
-      <itemPath>TemplateEventChecker.c</itemPath>
       <itemPath>TemplateFSM.c</itemPath>
-      <itemPath>TemplateHSM.c</itemPath>
       <itemPath>TemplateService.c</itemPath>
       <itemPath>TemplateSubHSM.c</itemPath>
       <itemPath>../../../ECE118/tape_detector.c</itemPath>
       <itemPath>Motor.c</itemPath>
       <itemPath>../ECE118/bumpers.c</itemPath>
+      <itemPath>solenoidTest.c</itemPath>
+      <itemPath>TopHSM.c</itemPath>
+      <itemPath>EventChecker.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -297,8 +299,20 @@
         <property key="wpo-lto" value="false"/>
       </C32Global>
       <item path="ES_Configure.h" ex="true" overriding="false">
-      </item>
-      <item path="TemplateHSM.c" ex="true" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-CO>
+        </C32-CO>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
     </conf>
   </confs>

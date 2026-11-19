@@ -31,8 +31,9 @@
 #include "ES_Configure.h"
 #include "ES_Framework.h"
 #include "BOARD.h"
-#include "TemplateHSM.h"
+#include "TopHSM.h"
 #include "TemplateSubHSM.h" //#include all sub state machines called
+#include "Motor.h"
 ///*******************************************************************************
 // * PRIVATE #DEFINES                                                            *
 // ******************************************************************************/
@@ -55,7 +56,7 @@ typedef enum {
 
 static const char *StateNames[] = {
 	"InitPState",
-	"FirstState",
+	"DriveState",
     "OnPerimState",
     "ClassifyTapeState",
     "OnCrossState",
@@ -71,7 +72,6 @@ static const char *StateNames[] = {
 //   Example: char RunAway(uint_8 seconds);*/
 
 // tape detection function
-
 //bump detection
 
 
@@ -82,6 +82,7 @@ static const char *StateNames[] = {
 // * The type of state variable should match that of enum in header file. */
 //
 static HSMState_t CurrentState = InitPState; // <- change enum name to match ENUM
+static HSMState_t nextState; // <- change enum name to match ENUM
 static uint8_t MyPriority;
 
 //
@@ -99,7 +100,7 @@ static uint8_t MyPriority;
 // *        to rename this to something appropriate.
 // *        Returns TRUE if successful, FALSE otherwise
 // * @author J. Edward Carryer, 2011.10.23 19:25 */
-uint8_t InitTemplateHSM(uint8_t Priority)
+uint8_t InitTopLevelHSM(uint8_t Priority)
 {
    MyPriority = Priority;
    // put us into the Initial PseudoState
@@ -121,7 +122,7 @@ uint8_t InitTemplateHSM(uint8_t Priority)
 // *        be posted to. Remember to rename to something appropriate.
 // *        Returns TRUE if successful, FALSE otherwise
 // * @author J. Edward Carryer, 2011.10.23 19:25 */
-uint8_t PostTemplateHSM(ES_Event ThisEvent)
+uint8_t PostTopLevelHSM(ES_Event ThisEvent)
 {
    return ES_PostToService(MyPriority, ThisEvent);
 }
@@ -141,10 +142,10 @@ uint8_t PostTemplateHSM(ES_Event ThisEvent)
 // *       not consumed as these need to pass pack to the higher level state machine.
 // * @author J. Edward Carryer, 2011.10.23 19:25
 // * @author Gabriel H Elkaim, 2011.10.23 19:25 */
-ES_Event RunTemplateHSM(ES_Event ThisEvent)
+ES_Event RunTopLevelHSM(ES_Event ThisEvent)
 {
    uint8_t makeTransition = FALSE; // use to flag transition
-   HSMState_t DriveState; // <- change type to correct enum
+   HSMState_t CurrentState; // <- change type to correct enum
 
    ES_Tattle(); // trace call stack
 
@@ -171,16 +172,57 @@ ES_Event RunTemplateHSM(ES_Event ThisEvent)
        }
        break;
 
-   case DriveState: // in the first state, replace this with correct names
-       // run sub-state machine for this state
-       //NOTE: the SubState Machine runs and responds to events before anything in the this
-       //state machine does
-       ThisEvent = RunTemplateSubHSM(ThisEvent);
-       switch (ThisEvent.EventType) {
-       case ES_NO_EVENT:
-       default:
+   case DriveState: //Do nothing but drive forward
+       //ThisEvent = RunTemplateSubHSM(ThisEvent); //Run DriveSubHSM
+       switch (ThisEvent.EventType) { // ?
+       case ES_ENTRY:
+           forward(100); // drive forward at 100 speed
            break;
+        case ES_EXIT:
+            stopMotors();
+            break;
+       case TAPE_DETECTED:
+              nextState = ClassifyTapeState;
+              makeTransition = TRUE;
+              ThisEvent.EventType = ES_NO_EVENT;
+              break;
+        case BUMP_DETECTED:
+              nextState = RecoveryState;
+              makeTransition = TRUE;
+              ThisEvent.EventType = ES_NO_EVENT;
+              break;
        }
+    case ClassifyTapeState:
+        //ThisEvent = RunTemplateSubHSM(ThisEvent); //Run ClassifyTapeSubHSM
+        switch (ThisEvent.EventType) {
+        case ES_ENTRY:
+            //start rotating to classify tape
+            break;
+        case LINE_DETECTED:
+            case ES_NO_EVENT:
+            break;
+        case TAPE_LOST:
+            nextState = DriveState;
+            makeTransition = TRUE;
+            ThisEvent.EventType = ES_NO_EVENT;
+            break;
+        }
+        case PERIMETER_DETECTED:
+            nextState = OnPerimState;
+            makeTransition = TRUE;
+            ThisEvent.EventType = ES_NO_EVENT;
+            break;
+        case CROSS_DETECTED:
+            nextState = OnCrossState;
+            makeTransition = TRUE;
+            ThisEvent.EventType = ES_NO_EVENT;
+            break;
+        case BUMP_DETECTED:
+            nextState = RecoveryState;
+            makeTransition = TRUE;
+            ThisEvent.EventType = ES_NO_EVENT;
+            break;
+        
        break;
    default: // all unhandled states fall into here
        break;
@@ -188,9 +230,9 @@ ES_Event RunTemplateHSM(ES_Event ThisEvent)
 
    if (makeTransition == TRUE) { // making a state transition, send EXIT and ENTRY
        // recursively call the current state with an exit event
-       RunTemplateHSM(EXIT_EVENT); // <- rename to your own Run function
+       RunTopLevelHSM(EXIT_EVENT); // <- rename to your own Run function
        CurrentState = nextState;
-       RunTemplateHSM(ENTRY_EVENT); // <- rename to your own Run function
+       RunTopLevelHSM(ENTRY_EVENT); // <- rename to your own Run function
    }
 
    ES_Tail(); // trace call stack end

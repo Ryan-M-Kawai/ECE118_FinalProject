@@ -47,10 +47,13 @@ typedef enum {
    BATTERY_CONNECTED,
    BATTERY_DISCONNECTED,
    TAPE_DETECTED,
+   TAPE_LOST,
    PERIMETER_DETECTED,
    BUMP_DETECTED,
+   BUMP_LOST,
    RECOVERED,
    CROSS_DETECTED,
+    LINE_DETECTED,
 
 	/* User-defined events end here */
    NUMBEROFEVENTS,
@@ -71,10 +74,13 @@ static const char *EventNames[] = {
 	"BATTERY_DISCONNECTED",
     // user events-----------
     "TAPE_DETECTED",
+    "TAPE_LOST",
     "PERIMETER_DETECTED",
     "BUMP_DETECTED",
+    "BUMP_LOST",
     "RECOVERED",
     "CROSS_DETECTED",
+    "LINE_DETECTED",
 
     //------------
 
@@ -87,18 +93,19 @@ static const char *EventNames[] = {
 
 /****************************************************************************/
 // This are the name of the Event checking function header file.
-#define EVENT_CHECK_HEADER "TemplateEventChecker.h"
+#define EVENT_CHECK_HEADER "EventChecker.h"
 
 /****************************************************************************/
 // This is the list of event checking functions
-#define EVENT_CHECK_LIST  TemplateCheckBattery
+#define EVENT_CHECK_LIST  TemplateCheckBattery, CHECK_TAPE_DETECTOR , CHECK_BUMPERS
 
 /****************************************************************************/
 // These are the definitions for the post functions to be executed when the
 // corresponding timer expires. All 16 must be defined. If you are not using
 // a timers, then you can use TIMER_UNUSED
 #define TIMER_UNUSED ((pPostFunc)0)
-#define TIMER0_RESP_FUNC TIMER_UNUSED
+#define TIMER0_RESP_FUNC PostTopLevelHSM
+
 #define TIMER1_RESP_FUNC TIMER_UNUSED
 #define TIMER2_RESP_FUNC TIMER_UNUSED
 #define TIMER3_RESP_FUNC TIMER_UNUSED
@@ -142,11 +149,11 @@ static const char *EventNames[] = {
 // services are added in numeric sequence (1,2,3,...) with increasing 
 // priorities
 // the header file with the public function prototypes
-#define SERV_0_HEADER "ES_KeyboardInput.h"
+#define SERV_0_HEADER "TopHSM.h"
 // the name of the Init function
-#define SERV_0_INIT InitKeyboardInput
+#define SERV_0_INIT InitTopLevelHSM
 // the name of the run function
-#define SERV_0_RUN RunKeyboardInput
+#define SERV_0_RUN RunTopLevelHSM
 // How big should this service's Queue be?
 #define SERV_0_QUEUE_SIZE 9
 

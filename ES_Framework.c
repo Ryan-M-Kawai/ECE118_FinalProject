@@ -102,7 +102,7 @@ static ES_ServDesc_t const ServDescList[] = {
 // Initialize this variable with the name of the posting function that you
 // want executed when a new keystroke is detected.
 
-static pPostFunc const pPostKeyFunc = POST_KEY_FUNC;
+//static pPostFunc const pPostKeyFunc = POST_KEY_FUNC;
 
 /****************************************************************************/
 // The queues for the services

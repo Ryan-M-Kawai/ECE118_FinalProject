@@ -126,10 +126,6 @@
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
-      <item path="../../../ECE118/include/ES_Framework.h"
-            ex="true"
-            overriding="false">
-      </item>
       <C32>
         <property key="additional-warnings" value="false"/>
         <property key="addresss-attribute-use" value="false"/>
@@ -302,8 +298,6 @@
         <property key="stack-smashing" value=""/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
-      <item path="ES_TattleTale.c" ex="true" overriding="false">
-      </item>
       <item path="newmainXC16.c" ex="true" overriding="false">
       </item>
     </conf>

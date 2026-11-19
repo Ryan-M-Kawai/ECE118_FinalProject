@@ -29,7 +29,7 @@
 // ******************************************************************************/
 
 #include "ES_Configure.h"
-#include "ES_Framework.h"
+//#include "ES_Framework.h"
 #include "EventChecker.h"
 #include "BOARD.h"
 #include "TopHSM.h"
@@ -178,14 +178,17 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
             switch (ThisEvent.EventType) {
                 case ES_ENTRY:
                     forward(700);
+                    printf("Entered drive state");
+                            
                     break;
                 case ES_EXIT:
                     stopMotors();
+                    printf("exited drive state\n");
                     break;
-
+                
                 case TAPE_DETECTED:
                     switch(ThisEvent.EventParam){
-                        case 
+                       ;
                     }
                     nextState = ClassifyTapeState;
                     makeTransition = TRUE;

@@ -38,13 +38,13 @@
  * PUBLIC TYPEDEFS                                                             *
  ******************************************************************************/
 typedef enum{
-    TAPE_FR,
-    TAPE_MR,
-    TAPE_BR,
-    TAPE_FL,
-    TAPE_BL,
-    TAPE_ML,
-    TAPE_CENTER,
+    SENSOR_FR,
+    SENSOR_MR,
+    SENSOR_BR,
+    SENSOR_FL,
+    SENSOR_BL,
+    SENSOR_ML,
+    SENSOR_CENTER,
 }TapeParam_t;
 
 /*******************************************************************************

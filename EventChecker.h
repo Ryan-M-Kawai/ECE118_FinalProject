@@ -37,12 +37,26 @@
 /*******************************************************************************
  * PUBLIC TYPEDEFS                                                             *
  ******************************************************************************/
-
+typedef enum{
+    TAPE_FR,
+    TAPE_MR,
+    TAPE_BR,
+    TAPE_FL,
+    TAPE_BL,
+    TAPE_ML,
+    TAPE_CENTER,
+}TapeParam_t;
 
 /*******************************************************************************
  * PUBLIC FUNCTION PROTOTYPES                                                  *
  ******************************************************************************/
-
+uint8_t IR_Changed_FL(void);
+uint8_t IR_Changed_ML(void);
+uint8_t IR_Changed_BL(void);
+uint8_t IR_Changed_FR(void);
+uint8_t IR_Changed_MR(void);
+uint8_t IR_Changed_BR(void);
+uint8_t IR_Changed_All(void);
 /**
  * @Function TemplateCheckBattery(void)
  * @param none

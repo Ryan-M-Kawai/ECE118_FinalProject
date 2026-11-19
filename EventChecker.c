@@ -31,12 +31,30 @@
 #include "ES_Events.h"
 #include "serial.h"
 #include "AD.h"
-
+#include "tape_detector.h"
+#include "TemplateService.h"
 /*******************************************************************************
 * MODULE #DEFINES                                                             *
 ******************************************************************************/
 #define BATTERY_DISCONNECT_THRESHOLD 175
 
+#define IR_SENSOR_PIN_FL AD_PORTV3 
+
+#define IR_SENSOR_PIN_ML AD_PORTV4
+
+#define IR_SENSOR_PIN_BL AD_PORTV6
+
+#define IR_SENSOR_PIN_FR AD_PORTV5
+
+#define IR_SENSOR_PIN_BR AD_PORTV7
+
+#define IR_SENSOR_PIN_MR AD_PORTV8
+#define IR_SENSOR_PINM AD_PORTW3
+
+#define IR_THRESH_HIGH 600   // must reach this to count as "above"
+#define IR_THRESH_LOW   150   // must drop below this to count as "below"
+#define IR_MAX_PINS      8
+#define DEBOUNCE_MS 10
 /*******************************************************************************
 * EVENTCHECKER_TEST SPECIFIC CODE                                                             *
 ******************************************************************************/
@@ -55,7 +73,6 @@ static ES_Event storedEvent;
 ******************************************************************************/
 /* Prototypes for private functions for this EventChecker. They should be functions
   relevant to the behavior of this particular event checker */
-
 /*******************************************************************************
 * PRIVATE MODULE VARIABLES                                                    *
 ******************************************************************************/
@@ -63,6 +80,7 @@ static ES_Event storedEvent;
 /* Any private module level variable that you might need for keeping track of
   events would be placed here. Private variables should be STATIC so that they
   are limited in scope to this module. */
+
 
 /*******************************************************************************
 * PUBLIC FUNCTIONS                                                            *
@@ -108,6 +126,191 @@ uint8_t TemplateCheckBattery(void) {
    return (returnVal);
 }
 
+
+uint8_t IR_Changed_FL(void)
+{
+    static unsigned char onTape = 0;      // assume off tape at boot
+    ES_Event thisEvent;
+    uint8_t returnVal = FALSE;
+
+    unsigned int irCurr = AD_ReadADPin(IR_SENSOR_PIN_FL);
+    if (irCurr > 1023) return FALSE;      // ERROR (pin not active)
+
+    if (!onTape && irCurr >= IR_THRESH_HIGH) {
+        onTape = 1;
+        thisEvent.EventType = TAPE_DETECTED;
+        thisEvent.EventParam = SENSOR_FL;
+        returnVal = TRUE;
+    } else if (onTape && irCurr < IR_THRESH_LOW) {
+        onTape = 0;
+        thisEvent.EventType = TAPE_LOST;
+        thisEvent.EventParam = SENSOR_FL;
+        returnVal = TRUE;
+    }
+    if (returnVal) {
+        PostTopLevelHSM(thisEvent);
+    }
+    return returnVal;
+}
+uint8_t IR_Changed_ML(void)
+{
+    static unsigned char onTape = 0;      // assume off tape at boot
+    ES_Event thisEvent;
+    uint8_t returnVal = FALSE;
+
+    unsigned int irCurr = AD_ReadADPin(IR_SENSOR_PIN_FM);
+    if (irCurr > 1023) return FALSE;      // ERROR (pin not active)
+
+    if (!onTape && irCurr >= IR_THRESH_HIGH) {
+        onTape = 1;
+        thisEvent.EventType = TAPE_DETECTED;
+        thisEvent.EventParam = SENSOR_FM;
+        returnVal = TRUE;
+    } else if (onTape && irCurr < IR_THRESH_LOW) {
+        onTape = 0;
+        thisEvent.EventType = TAPE_LOST;
+        thisEvent.EventParam = SENSOR_FM;
+        returnVal = TRUE;
+    }
+    if (returnVal) {
+        PostTopLevelHSM(thisEvent);
+    }
+    return returnVal;
+}
+uint8_t IR_Changed_BL(void)
+{
+    static unsigned char onTape = 0;      // assume off tape at boot
+    ES_Event thisEvent;
+    uint8_t returnVal = FALSE;
+
+    unsigned int irCurr = AD_ReadADPin(IR_SENSOR_PIN_BL);
+    if (irCurr > 1023) return FALSE;      // ERROR (pin not active)
+
+    if (!onTape && irCurr >= IR_THRESH_HIGH) {
+        onTape = 1;
+        thisEvent.EventType = TAPE_DETECTED;
+        thisEvent.EventParam = SENSOR_BL;
+        returnVal = TRUE;
+    } else if (onTape && irCurr < IR_THRESH_LOW) {
+        onTape = 0;
+        thisEvent.EventType = TAPE_LOST;
+        thisEvent.EventParam = SENSOR_BL;
+        returnVal = TRUE;
+    }
+    if (returnVal) {
+        PostTopLevelHSM(thisEvent);
+    }
+    return returnVal;
+}
+uint8_t IR_Changed_FR(void)
+{
+    static unsigned char onTape = 0;      // assume off tape at boot
+    ES_Event thisEvent;
+    uint8_t returnVal = FALSE;
+
+    unsigned int irCurr = AD_ReadADPin(IR_SENSOR_PIN_FR);
+    if (irCurr > 1023) return FALSE;      // ERROR (pin not active)
+
+    if (!onTape && irCurr >= IR_THRESH_HIGH) {
+        onTape = 1;
+        thisEvent.EventType = TAPE_DETECTED;
+        thisEvent.EventParam = SENSOR_FR;
+        returnVal = TRUE;
+    } else if (onTape && irCurr < IR_THRESH_LOW) {
+        onTape = 0;
+        thisEvent.EventType = TAPE_LOST;
+        thisEvent.EventParam = SENSOR_FR;
+        returnVal = TRUE;
+    }
+    if (returnVal) {
+        PostTopLevelHSM(thisEvent);
+    }
+    return returnVal;
+}
+uint8_t IR_Changed_MR(void)
+{
+    static unsigned char onTape = 0;      // assume off tape at boot
+    ES_Event thisEvent;
+    uint8_t returnVal = FALSE;
+
+    unsigned int irCurr = AD_ReadADPin(IR_SENSOR_PIN_MR);
+    if (irCurr > 1023) return FALSE;      // ERROR (pin not active)
+
+    if (!onTape && irCurr >= IR_THRESH_HIGH) {
+        onTape = 1;
+        thisEvent.EventType = TAPE_DETECTED;
+        thisEvent.EventParam = SENSOR_MR;
+        returnVal = TRUE;
+    } else if (onTape && irCurr < IR_THRESH_LOW) {
+        onTape = 0;
+        thisEvent.EventType = TAPE_LOST;
+        thisEvent.EventParam = SENSOR_MR;
+        returnVal = TRUE;
+    }
+    if (returnVal) {
+        PostTopLevelHSM(thisEvent);
+    }
+    return returnVal;
+}
+uint8_t IR_Changed_BR(void)
+{
+    static unsigned char onTape = 0;      // assume off tape at boot
+    ES_Event thisEvent;
+    uint8_t returnVal = FALSE;
+
+    unsigned int irCurr = AD_ReadADPin(IR_SENSOR_PIN_BR);
+    if (irCurr > 1023) return FALSE;      // ERROR (pin not active)
+
+    if (!onTape && irCurr >= IR_THRESH_HIGH) {
+        onTape = 1;
+        thisEvent.EventType = TAPE_DETECTED;
+        thisEvent.EventParam = SENSOR_BR;
+        returnVal = TRUE;
+    } else if (onTape && irCurr < IR_THRESH_LOW) {
+        onTape = 0;
+        thisEvent.EventType = TAPE_LOST;
+        thisEvent.EventParam = SENSOR_BR;
+        returnVal = TRUE;
+    }
+    if (returnVal) {
+        PostTopLevelHSM(thisEvent);
+    }
+    return returnVal;
+}
+uint8_t IR_Changed_Center(void)
+{
+    static unsigned char onTape = 0;      // assume off tape at boot
+    ES_Event thisEvent;
+    uint8_t returnVal = FALSE;
+
+    unsigned int irCurr = AD_ReadADPin(IR_SENSOR_PIN_M);
+    if (irCurr > 1023) return FALSE;      // ERROR (pin not active)
+
+    if (!onTape && irCurr >= IR_THRESH_HIGH) {
+        onTape = 1;
+        thisEvent.EventType = TAPE_DETECTED;
+        thisEvent.EventParam = SENSOR_CENTER;
+        returnVal = TRUE;
+    } else if (onTape && irCurr < IR_THRESH_LOW) {
+        onTape = 0;
+        thisEvent.EventType = TAPE_LOST;
+        thisEvent.EventParam = SENSOR_CENTER;
+        returnVal = TRUE;
+    }
+    if (returnVal) {
+        PostTopLevelHSM(thisEvent);
+    }
+    return returnVal;
+}
+uint8_t IR_Changed_All(void){
+    IR_Changed_BL(void);
+    IR_Changed_ML(void);
+    IR_Changed_FL(void);
+    IR_Changed_FR(void);
+    IR_Changed_MR(void);
+    IR_Changed_BR(void);
+
+}
 /* 
 * The Test Harness for the event checkers is conditionally compiled using
 * the EVENTCHECKER_TEST macro (defined either in the file or at the project level).

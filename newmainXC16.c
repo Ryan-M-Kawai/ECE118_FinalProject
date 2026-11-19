@@ -12,7 +12,6 @@
 #include <bumpers.h>
 #include <solenoidTest.h>
 
-
 int main(void) {
     // Initialize hardware
 
@@ -23,50 +22,56 @@ int main(void) {
     bumpers_Init();
     IRSensor_Init();
 
-    //    printf("\r\nHello World!\r\n");
-    //    TIMERS_SetTimer(1, 3000);
-    //    TIMERS_StartTimer(1);
-    //    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
-    //
-    //        forward(600);
-    //    }
-    //    stopMotors();
-    //    TIMERS_InitTimer(1, 3000);
-    //    TIMERS_StartTimer(1);
-    //    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
-    //
-    //        backward(600);
-    //    }
-    //
-    //    stopMotors();
-    //    TIMERS_InitTimer(1, 3000);
-    //    TIMERS_StartTimer(1);
-    //    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
-    //
-    //        turnLeft(600);
-    //    }
-    //    stopMotors();
-    //    TIMERS_InitTimer(1, 3000);
-    //    TIMERS_StartTimer(1);
-    //    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
-    //        turnRight(600);
-    //
-    //    }
-    //    stopMotors();
-    //    TIMERS_InitTimer(1, 3000);
-    //    TIMERS_StartTimer(1);
-    //    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
-    //        strafeRight(600);
-    //
-    //    }
-    //    stopMotors();
-    //    TIMERS_InitTimer(1, 3000);
-    //    TIMERS_StartTimer(1);
-    //    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
-    //        strafeLeft(600);
-    //
-    //    }
-    //stopMotors();
+    printf("\r\nHello World!\r\n");
+    TIMERS_SetTimer(1, 3000);
+    TIMERS_StartTimer(1);
+    forward(600);
+    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
+        ;
+
+    }
+    stopMotors();
+    TIMERS_InitTimer(1, 3000);
+    TIMERS_StartTimer(1);
+    backward(600);
+    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
+
+        ;
+    }
+
+    stopMotors();
+    TIMERS_InitTimer(1, 3000);
+    TIMERS_StartTimer(1);
+    turnLeft(600);
+    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
+        ;
+
+    }
+    stopMotors();
+    TIMERS_InitTimer(1, 3000);
+    TIMERS_StartTimer(1);
+    turnRight(600);
+    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
+
+
+    }
+    stopMotors();
+    TIMERS_InitTimer(1, 3000);
+    TIMERS_StartTimer(1);
+    strafeRight(600);
+    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
+
+        ;
+    }
+    stopMotors();
+    TIMERS_InitTimer(1, 3000);
+    TIMERS_StartTimer(1);
+    strafeLeft(600);
+    while (TIMERS_IsTimerExpired(1) != TIMER_EXPIRED) {
+
+        ;
+    }
+    stopMotors();
     //    
 
 

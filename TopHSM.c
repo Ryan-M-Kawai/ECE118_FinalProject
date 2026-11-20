@@ -158,7 +158,7 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
                 // transition from the initial pseudo-state into the actual
                 // initial state
                 // Initialize all sub-state machines
-                //InitClassifySubHSM();
+                InitClassifySubHSM();
                 //InitTemplateSubHSM(); on perimeter, 
                 //InitTemplateSubHSM(); classify tape
                 //InitTemplateSubHSM(); on cross,
@@ -188,7 +188,6 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
                     break;
 
                 case TAPE_DETECTED:
-
                     nextState = ClassifyTapeState;
                     makeTransition = TRUE;
                     ThisEvent.EventType = ES_NO_EVENT;
@@ -205,6 +204,7 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
             break; // <-- required
 
         case ClassifyTapeState:
+        ThisEvent = RunClassifySubHSM(ThisEvent);
             switch (ThisEvent.EventType) {
                 case ES_ENTRY:
                     // start rotating to classify tape

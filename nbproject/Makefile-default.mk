@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=AD.c BOARD.c ES_CheckEvents.c ES_Framework.c ES_KeyboardInput.c ES_PostList.c ES_Queue.c ES_TattleTale.c ES_Timers.c IO_Ports.c LED.c RC_Servo.c pwm.c roach.c serial.c timers.c TemplateES_Main.c TemplateFSM.c TemplateService.c ../../../ECE118/tape_detector.c Motor.c ../ECE118/bumpers.c solenoidTest.c TopHSM.c EventChecker.c
+SOURCEFILES_QUOTED_IF_SPACED=AD.c BOARD.c ES_CheckEvents.c ES_Framework.c ES_KeyboardInput.c ES_PostList.c ES_Queue.c ES_TattleTale.c ES_Timers.c IO_Ports.c LED.c RC_Servo.c pwm.c roach.c serial.c timers.c TemplateES_Main.c TemplateFSM.c TemplateService.c ../../../ECE118/tape_detector.c Motor.c ../ECE118/bumpers.c solenoidTest.c TopHSM.c EventChecker.c classifySubHSM.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/AD.o ${OBJECTDIR}/BOARD.o ${OBJECTDIR}/ES_CheckEvents.o ${OBJECTDIR}/ES_Framework.o ${OBJECTDIR}/ES_KeyboardInput.o ${OBJECTDIR}/ES_PostList.o ${OBJECTDIR}/ES_Queue.o ${OBJECTDIR}/ES_TattleTale.o ${OBJECTDIR}/ES_Timers.o ${OBJECTDIR}/IO_Ports.o ${OBJECTDIR}/LED.o ${OBJECTDIR}/RC_Servo.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/roach.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/timers.o ${OBJECTDIR}/TemplateES_Main.o ${OBJECTDIR}/TemplateFSM.o ${OBJECTDIR}/TemplateService.o ${OBJECTDIR}/_ext/6989536/tape_detector.o ${OBJECTDIR}/Motor.o ${OBJECTDIR}/_ext/2123729024/bumpers.o ${OBJECTDIR}/solenoidTest.o ${OBJECTDIR}/TopHSM.o ${OBJECTDIR}/EventChecker.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/AD.o.d ${OBJECTDIR}/BOARD.o.d ${OBJECTDIR}/ES_CheckEvents.o.d ${OBJECTDIR}/ES_Framework.o.d ${OBJECTDIR}/ES_KeyboardInput.o.d ${OBJECTDIR}/ES_PostList.o.d ${OBJECTDIR}/ES_Queue.o.d ${OBJECTDIR}/ES_TattleTale.o.d ${OBJECTDIR}/ES_Timers.o.d ${OBJECTDIR}/IO_Ports.o.d ${OBJECTDIR}/LED.o.d ${OBJECTDIR}/RC_Servo.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/roach.o.d ${OBJECTDIR}/serial.o.d ${OBJECTDIR}/timers.o.d ${OBJECTDIR}/TemplateES_Main.o.d ${OBJECTDIR}/TemplateFSM.o.d ${OBJECTDIR}/TemplateService.o.d ${OBJECTDIR}/_ext/6989536/tape_detector.o.d ${OBJECTDIR}/Motor.o.d ${OBJECTDIR}/_ext/2123729024/bumpers.o.d ${OBJECTDIR}/solenoidTest.o.d ${OBJECTDIR}/TopHSM.o.d ${OBJECTDIR}/EventChecker.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/AD.o ${OBJECTDIR}/BOARD.o ${OBJECTDIR}/ES_CheckEvents.o ${OBJECTDIR}/ES_Framework.o ${OBJECTDIR}/ES_KeyboardInput.o ${OBJECTDIR}/ES_PostList.o ${OBJECTDIR}/ES_Queue.o ${OBJECTDIR}/ES_TattleTale.o ${OBJECTDIR}/ES_Timers.o ${OBJECTDIR}/IO_Ports.o ${OBJECTDIR}/LED.o ${OBJECTDIR}/RC_Servo.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/roach.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/timers.o ${OBJECTDIR}/TemplateES_Main.o ${OBJECTDIR}/TemplateFSM.o ${OBJECTDIR}/TemplateService.o ${OBJECTDIR}/_ext/6989536/tape_detector.o ${OBJECTDIR}/Motor.o ${OBJECTDIR}/_ext/2123729024/bumpers.o ${OBJECTDIR}/solenoidTest.o ${OBJECTDIR}/TopHSM.o ${OBJECTDIR}/EventChecker.o ${OBJECTDIR}/classifySubHSM.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/AD.o.d ${OBJECTDIR}/BOARD.o.d ${OBJECTDIR}/ES_CheckEvents.o.d ${OBJECTDIR}/ES_Framework.o.d ${OBJECTDIR}/ES_KeyboardInput.o.d ${OBJECTDIR}/ES_PostList.o.d ${OBJECTDIR}/ES_Queue.o.d ${OBJECTDIR}/ES_TattleTale.o.d ${OBJECTDIR}/ES_Timers.o.d ${OBJECTDIR}/IO_Ports.o.d ${OBJECTDIR}/LED.o.d ${OBJECTDIR}/RC_Servo.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/roach.o.d ${OBJECTDIR}/serial.o.d ${OBJECTDIR}/timers.o.d ${OBJECTDIR}/TemplateES_Main.o.d ${OBJECTDIR}/TemplateFSM.o.d ${OBJECTDIR}/TemplateService.o.d ${OBJECTDIR}/_ext/6989536/tape_detector.o.d ${OBJECTDIR}/Motor.o.d ${OBJECTDIR}/_ext/2123729024/bumpers.o.d ${OBJECTDIR}/solenoidTest.o.d ${OBJECTDIR}/TopHSM.o.d ${OBJECTDIR}/EventChecker.o.d ${OBJECTDIR}/classifySubHSM.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/AD.o ${OBJECTDIR}/BOARD.o ${OBJECTDIR}/ES_CheckEvents.o ${OBJECTDIR}/ES_Framework.o ${OBJECTDIR}/ES_KeyboardInput.o ${OBJECTDIR}/ES_PostList.o ${OBJECTDIR}/ES_Queue.o ${OBJECTDIR}/ES_TattleTale.o ${OBJECTDIR}/ES_Timers.o ${OBJECTDIR}/IO_Ports.o ${OBJECTDIR}/LED.o ${OBJECTDIR}/RC_Servo.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/roach.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/timers.o ${OBJECTDIR}/TemplateES_Main.o ${OBJECTDIR}/TemplateFSM.o ${OBJECTDIR}/TemplateService.o ${OBJECTDIR}/_ext/6989536/tape_detector.o ${OBJECTDIR}/Motor.o ${OBJECTDIR}/_ext/2123729024/bumpers.o ${OBJECTDIR}/solenoidTest.o ${OBJECTDIR}/TopHSM.o ${OBJECTDIR}/EventChecker.o
+OBJECTFILES=${OBJECTDIR}/AD.o ${OBJECTDIR}/BOARD.o ${OBJECTDIR}/ES_CheckEvents.o ${OBJECTDIR}/ES_Framework.o ${OBJECTDIR}/ES_KeyboardInput.o ${OBJECTDIR}/ES_PostList.o ${OBJECTDIR}/ES_Queue.o ${OBJECTDIR}/ES_TattleTale.o ${OBJECTDIR}/ES_Timers.o ${OBJECTDIR}/IO_Ports.o ${OBJECTDIR}/LED.o ${OBJECTDIR}/RC_Servo.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/roach.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/timers.o ${OBJECTDIR}/TemplateES_Main.o ${OBJECTDIR}/TemplateFSM.o ${OBJECTDIR}/TemplateService.o ${OBJECTDIR}/_ext/6989536/tape_detector.o ${OBJECTDIR}/Motor.o ${OBJECTDIR}/_ext/2123729024/bumpers.o ${OBJECTDIR}/solenoidTest.o ${OBJECTDIR}/TopHSM.o ${OBJECTDIR}/EventChecker.o ${OBJECTDIR}/classifySubHSM.o
 
 # Source Files
-SOURCEFILES=AD.c BOARD.c ES_CheckEvents.c ES_Framework.c ES_KeyboardInput.c ES_PostList.c ES_Queue.c ES_TattleTale.c ES_Timers.c IO_Ports.c LED.c RC_Servo.c pwm.c roach.c serial.c timers.c TemplateES_Main.c TemplateFSM.c TemplateService.c ../../../ECE118/tape_detector.c Motor.c ../ECE118/bumpers.c solenoidTest.c TopHSM.c EventChecker.c
+SOURCEFILES=AD.c BOARD.c ES_CheckEvents.c ES_Framework.c ES_KeyboardInput.c ES_PostList.c ES_Queue.c ES_TattleTale.c ES_Timers.c IO_Ports.c LED.c RC_Servo.c pwm.c roach.c serial.c timers.c TemplateES_Main.c TemplateFSM.c TemplateService.c ../../../ECE118/tape_detector.c Motor.c ../ECE118/bumpers.c solenoidTest.c TopHSM.c EventChecker.c classifySubHSM.c
 
 
 
@@ -251,6 +251,12 @@ ${OBJECTDIR}/EventChecker.o: EventChecker.c  .generated_files/flags/default/c0d5
 	@${RM} ${OBJECTDIR}/EventChecker.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -O0 -fno-common -I"../ECE118/include" -I"../ECE118/templates" -I"../ECE118/src" -MP -MMD -MF "${OBJECTDIR}/EventChecker.o.d" -o ${OBJECTDIR}/EventChecker.o EventChecker.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
+${OBJECTDIR}/classifySubHSM.o: classifySubHSM.c  .generated_files/flags/default/333bd06b2ef822c7a410ab55f976c4645f55d15f .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/classifySubHSM.o.d 
+	@${RM} ${OBJECTDIR}/classifySubHSM.o 
+	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -O0 -fno-common -I"../ECE118/include" -I"../ECE118/templates" -I"../ECE118/src" -MP -MMD -MF "${OBJECTDIR}/classifySubHSM.o.d" -o ${OBJECTDIR}/classifySubHSM.o classifySubHSM.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
+	
 else
 ${OBJECTDIR}/AD.o: AD.c  .generated_files/flags/default/9ce9a46d0f37813352907c410873208a7c6d2028 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
@@ -401,6 +407,12 @@ ${OBJECTDIR}/EventChecker.o: EventChecker.c  .generated_files/flags/default/b799
 	@${RM} ${OBJECTDIR}/EventChecker.o.d 
 	@${RM} ${OBJECTDIR}/EventChecker.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -O0 -fno-common -I"../ECE118/include" -I"../ECE118/templates" -I"../ECE118/src" -MP -MMD -MF "${OBJECTDIR}/EventChecker.o.d" -o ${OBJECTDIR}/EventChecker.o EventChecker.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
+	
+${OBJECTDIR}/classifySubHSM.o: classifySubHSM.c  .generated_files/flags/default/9b583cba4f515aa6bdf0a4f820f686a2a6bb94c5 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/classifySubHSM.o.d 
+	@${RM} ${OBJECTDIR}/classifySubHSM.o 
+	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -O0 -fno-common -I"../ECE118/include" -I"../ECE118/templates" -I"../ECE118/src" -MP -MMD -MF "${OBJECTDIR}/classifySubHSM.o.d" -o ${OBJECTDIR}/classifySubHSM.o classifySubHSM.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
 endif
 

@@ -37,14 +37,14 @@
  * MODULE #DEFINES                                                             *
  ******************************************************************************/
 typedef enum {
-
+    InitPstate,
     TurningState,
     LineFollowingState,
     CheckCross
 } TemplateSubHSMState_t;
 
 static const char *StateNames[] = {
-	
+    "InitPstate",
 	"TurningState",
     "LineFollowingState",
     "CheckCross"
@@ -65,7 +65,7 @@ static const char *StateNames[] = {
 /* You will need MyPriority and the state variable; you may need others as well.
  * The type of state variable should match that of enum in header file. */
 
-static TemplateSubHSMState_t CurrentState = InitPSubState; // <- change name to match ENUM
+static TemplateSubHSMState_t CurrentState = InitPstate; // <- change name to match ENUM
 static uint8_t MyPriority;
 
 
@@ -87,8 +87,8 @@ uint8_t InitClassifySubHSM(void)
 {
     ES_Event returnEvent;
 
-    CurrentState = ;
-    returnEvent = RunTemplateSubHSM(INIT_EVENT);
+    CurrentState = InitPstate ;
+    returnEvent = RunClassifySubHSM(INIT_EVENT);
     if (returnEvent.EventType == ES_NO_EVENT) {
         return TRUE;
     }
@@ -110,7 +110,7 @@ uint8_t InitClassifySubHSM(void)
  *       not consumed as these need to pass pack to the higher level state machine.
  * @author J. Edward Carryer, 2011.10.23 19:25
  * @author Gabriel H Elkaim, 2011.10.23 19:25 */
-ES_Event RunTemplateSubHSM(ES_Event ThisEvent)
+ES_Event RunClassifySubHSM(ES_Event ThisEvent)
 {
     uint8_t makeTransition = FALSE; // use to flag transition
     TemplateSubHSMState_t nextState; // <- change type to correct enum
@@ -118,7 +118,7 @@ ES_Event RunTemplateSubHSM(ES_Event ThisEvent)
     ES_Tattle(); // trace call stack
 
     switch (CurrentState) {
-    case InitPSubState: // If current state is initial Psedudo State
+    case InitPstate: // If current state is initial Psedudo State
         if (ThisEvent.EventType == ES_INIT)// only respond to ES_Init
         {
             // this is where you would put any actions associated with the
@@ -126,15 +126,23 @@ ES_Event RunTemplateSubHSM(ES_Event ThisEvent)
             // initial state
 
             // now put the machine into the actual initial state
-            nextState = SubFirstState;
+            nextState = TurningState;
             makeTransition = TRUE;
             ThisEvent.EventType = ES_NO_EVENT;
         }
         break;
 
-    case SubFirstState: // in the first state, replace this with correct names
+    case TurningState: // in the first state, replace this with correct names
         switch (ThisEvent.EventType) {
         case ES_NO_EVENT:
+            break;
+        case ES_ENTRY:
+            break;
+        case TAPE_DETECTED:
+//            switch(ThisEvent.EventParam){
+//                case :
+//            }
+            break;
         default: // all unhandled events pass the event back up to the next level
             break;
         }
@@ -146,9 +154,9 @@ ES_Event RunTemplateSubHSM(ES_Event ThisEvent)
 
     if (makeTransition == TRUE) { // making a state transition, send EXIT and ENTRY
         // recursively call the current state with an exit event
-        RunTemplateSubHSM(EXIT_EVENT); // <- rename to your own Run function
+        RunClassifySubHSM(EXIT_EVENT); // <- rename to your own Run function
         CurrentState = nextState;
-        RunTemplateSubHSM(ENTRY_EVENT); // <- rename to your own Run function
+        RunClassifySubHSM(ENTRY_EVENT); // <- rename to your own Run function
     }
 
     ES_Tail(); // trace call stack end

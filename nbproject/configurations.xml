@@ -28,7 +28,6 @@
       <itemPath>../../../ECE118/include/timers.h</itemPath>
       <itemPath>TemplateFSM.h</itemPath>
       <itemPath>TemplateService.h</itemPath>
-      <itemPath>TemplateSubHSM.h</itemPath>
       <itemPath>../ECE118/tape_detector.h</itemPath>
       <itemPath>../ECE118/include/Motor.h</itemPath>
       <itemPath>../ECE118/include/bumpers.h</itemPath>
@@ -36,6 +35,7 @@
       <itemPath>EventChecker.h</itemPath>
       <itemPath>../ECE118/include/TopHSM.h</itemPath>
       <itemPath>../ECE118/include/ES_Configure.h</itemPath>
+      <itemPath>classifySubHSM.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -70,13 +70,13 @@
       <itemPath>TemplateES_Main.c</itemPath>
       <itemPath>TemplateFSM.c</itemPath>
       <itemPath>TemplateService.c</itemPath>
-      <itemPath>TemplateSubHSM.c</itemPath>
       <itemPath>../../../ECE118/tape_detector.c</itemPath>
       <itemPath>Motor.c</itemPath>
       <itemPath>../ECE118/bumpers.c</itemPath>
       <itemPath>solenoidTest.c</itemPath>
       <itemPath>TopHSM.c</itemPath>
       <itemPath>EventChecker.c</itemPath>
+      <itemPath>classifySubHSM.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -298,7 +298,23 @@
         <property key="stack-smashing" value=""/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
+      <item path="classifySubHSM.c" ex="true" overriding="false">
+      </item>
       <item path="newmainXC16.c" ex="true" overriding="false">
+        <C32>
+        </C32>
+        <C32-AR>
+        </C32-AR>
+        <C32-AS>
+        </C32-AS>
+        <C32-CO>
+        </C32-CO>
+        <C32-LD>
+        </C32-LD>
+        <C32CPP>
+        </C32CPP>
+        <C32Global>
+        </C32Global>
       </item>
     </conf>
   </confs>

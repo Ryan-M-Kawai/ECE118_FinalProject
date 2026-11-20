@@ -33,7 +33,7 @@
 #include "EventChecker.h"
 #include "BOARD.h"
 #include "TopHSM.h"
-#include "TemplateSubHSM.h" //#include all sub state machines called
+#include "classifySubHSM.h" //#include all sub state machines called
 #include "Motor.h"
 ///*******************************************************************************
 // * PRIVATE #DEFINES                                                            *
@@ -158,7 +158,7 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
                 // transition from the initial pseudo-state into the actual
                 // initial state
                 // Initialize all sub-state machines
-
+                //InitClassifySubHSM();
                 //InitTemplateSubHSM(); on perimeter, 
                 //InitTemplateSubHSM(); classify tape
                 //InitTemplateSubHSM(); on cross,
@@ -178,19 +178,22 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
             switch (ThisEvent.EventType) {
                 case ES_ENTRY:
                     forward(700);
-                    printf("Entered drive state");
-                            
+                    printf("Entered drive state\r\n");
+
                     break;
                 case ES_EXIT:
                     stopMotors();
-                    printf("exited drive state\n");
+
+                    printf("exited drive state\r\n");
                     break;
-                
+
                 case TAPE_DETECTED:
+
                     nextState = ClassifyTapeState;
                     makeTransition = TRUE;
                     ThisEvent.EventType = ES_NO_EVENT;
                     break;
+
                 case BUMP_DETECTED:
                     nextState = RecoveryState;
                     makeTransition = TRUE;
@@ -205,17 +208,22 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
             switch (ThisEvent.EventType) {
                 case ES_ENTRY:
                     // start rotating to classify tape
-                    
                     break;
                 case ES_EXIT:
-                    stopMotors();
+
                     break;
                 case LINE_DETECTED:
                     break; // TODO
                 case TAPE_LOST:
-                    nextState = DriveState;
-                    makeTransition = TRUE;
-                    ThisEvent.EventType = ES_NO_EVENT;
+                    switch (ThisEvent.EventParam) {
+                        case SENSOR_FL:
+                            nextState = DriveState;
+                            makeTransition = TRUE;
+                            ThisEvent.EventType = ES_NO_EVENT;
+                        case SENSOR_ML:
+                            break;
+                    }
+
                     break;
                 case PERIMETER_DETECTED: // moved inside
                     nextState = OnPerimState;
@@ -239,6 +247,7 @@ ES_Event RunTopLevelHSM(ES_Event ThisEvent) {
         case OnPerimState:
             break;
         case OnCrossState:
+
             break;
         case RecoveryState:
             break;

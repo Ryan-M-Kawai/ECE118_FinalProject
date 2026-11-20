@@ -31,19 +31,24 @@
 #include "ES_Framework.h"
 #include "BOARD.h"
 #include "TemplateHSM.h"
-#include "TemplateSubHSM.h"
+#include "classifySubHSM.h"
 
 /*******************************************************************************
  * MODULE #DEFINES                                                             *
  ******************************************************************************/
 typedef enum {
-    InitPSubState,
-    SubFirstState,
+
+    TurningState,
+    LineFollowingState,
+    CheckCross
 } TemplateSubHSMState_t;
 
 static const char *StateNames[] = {
-	"InitPSubState",
-	"SubFirstState",
+	
+	"TurningState",
+    "LineFollowingState",
+    "CheckCross"
+
 };
 
 
@@ -78,11 +83,11 @@ static uint8_t MyPriority;
  *        to rename this to something appropriate.
  *        Returns TRUE if successful, FALSE otherwise
  * @author J. Edward Carryer, 2011.10.23 19:25 */
-uint8_t InitTemplateSubHSM(void)
+uint8_t InitClassifySubHSM(void)
 {
     ES_Event returnEvent;
 
-    CurrentState = InitPSubState;
+    CurrentState = ;
     returnEvent = RunTemplateSubHSM(INIT_EVENT);
     if (returnEvent.EventType == ES_NO_EVENT) {
         return TRUE;

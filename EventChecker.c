@@ -34,6 +34,7 @@
 #include "tape_detector.h"
 #include "bumpers.h"
 #include "TemplateService.h"
+#include "stdio.h"
 /*******************************************************************************
  * MODULE #DEFINES                                                             *
  ******************************************************************************/
@@ -141,14 +142,26 @@ uint8_t IR_Changed_FL(void) {
         onTape = 1;
         thisEvent.EventType = TAPE_DETECTED;
         thisEvent.EventParam = SENSOR_FL;
+        printf("Threshhigh\n");
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     } else if (onTape && irCurr < IR_THRESH_LOW) {
         onTape = 0;
         thisEvent.EventType = TAPE_LOST;
         thisEvent.EventParam = SENSOR_FL;
+        printf("Threshlow\n");
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     }
-  
+
     return returnVal;
 }
 
@@ -165,13 +178,23 @@ uint8_t IR_Changed_ML(void) {
         thisEvent.EventType = TAPE_DETECTED;
         thisEvent.EventParam = SENSOR_ML;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     } else if (onTape && irCurr < IR_THRESH_LOW) {
         onTape = 0;
         thisEvent.EventType = TAPE_LOST;
         thisEvent.EventParam = SENSOR_ML;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     }
-    
+
     return returnVal;
 }
 
@@ -188,13 +211,23 @@ uint8_t IR_Changed_BL(void) {
         thisEvent.EventType = TAPE_DETECTED;
         thisEvent.EventParam = SENSOR_BL;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     } else if (onTape && irCurr < IR_THRESH_LOW) {
         onTape = 0;
         thisEvent.EventType = TAPE_LOST;
         thisEvent.EventParam = SENSOR_BL;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     }
-  
+
     return returnVal;
 }
 
@@ -211,13 +244,23 @@ uint8_t IR_Changed_FR(void) {
         thisEvent.EventType = TAPE_DETECTED;
         thisEvent.EventParam = SENSOR_FR;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     } else if (onTape && irCurr < IR_THRESH_LOW) {
         onTape = 0;
         thisEvent.EventType = TAPE_LOST;
         thisEvent.EventParam = SENSOR_FR;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     }
-    
+
     return returnVal;
 }
 
@@ -234,11 +277,21 @@ uint8_t IR_Changed_MR(void) {
         thisEvent.EventType = TAPE_DETECTED;
         thisEvent.EventParam = SENSOR_MR;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     } else if (onTape && irCurr < IR_THRESH_LOW) {
         onTape = 0;
         thisEvent.EventType = TAPE_LOST;
         thisEvent.EventParam = SENSOR_MR;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     }
 
     return returnVal;
@@ -257,13 +310,23 @@ uint8_t IR_Changed_BR(void) {
         thisEvent.EventType = TAPE_DETECTED;
         thisEvent.EventParam = SENSOR_BR;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     } else if (onTape && irCurr < IR_THRESH_LOW) {
         onTape = 0;
         thisEvent.EventType = TAPE_LOST;
         thisEvent.EventParam = SENSOR_BR;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     }
-    
+
     return returnVal;
 }
 
@@ -280,29 +343,47 @@ uint8_t IR_Changed_Center(void) {
         thisEvent.EventType = TAPE_DETECTED;
         thisEvent.EventParam = SENSOR_CENTER;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     } else if (onTape && irCurr < IR_THRESH_LOW) {
         onTape = 0;
         thisEvent.EventType = TAPE_LOST;
         thisEvent.EventParam = SENSOR_CENTER;
         returnVal = TRUE;
+#ifndef EVENTCHECKER_TEST
+        PostTemplateService(thisEvent);
+#else
+        SaveEvent(thisEvent);
+#endif
     }
+
     return returnVal;
 }
 
 uint8_t IR_Changed_All(void) {
-    IR_Changed_BL();
-    IR_Changed_ML();
-    IR_Changed_FL();
-    IR_Changed_FR();
-    IR_Changed_MR();
-    IR_Changed_BR();
+
+    static int count = 0;
+    uint8_t ret = FALSE;
+    if (++count < DEBOUNCE_MS) return FALSE;
+    count = 0;
+    ret |= IR_Changed_BL();
+    ret |= IR_Changed_ML();
+    ret |= IR_Changed_FL();
+    ret |= IR_Changed_FR();
+    ret |= IR_Changed_MR();
+    ret |= IR_Changed_BR();
+    return ret;
 }
-uint8_t FR_Bumper(void){
+
+uint8_t FR_Bumper(void) {
     ES_Event bump_event;
     static int prev = 0;
     static int count = 0;
-    int curr = (int)AD_ReadADPin(FR_BUMPER_PIN)>BUMPER_HIGH;
-        
+    int curr = (int) AD_ReadADPin(FR_BUMPER_PIN) > BUMPER_HIGH;
+
     uint8_t returnVal = FALSE;
     if (curr == prev) {
         count = 0;
@@ -315,25 +396,25 @@ uint8_t FR_Bumper(void){
                 bump_event.EventType = BUMP_DETECTED;
                 bump_event.EventParam = FR;
                 returnVal = TRUE;
-            }
-            else{
+            } else {
                 bump_event.EventType = BUMP_LOST;
-                                bump_event.EventParam = FR;
-returnVal = TRUE;
-            }      
-            
+                bump_event.EventParam = FR;
+                returnVal = TRUE;
+            }
+
         }
     }
     return returnVal;
 }
-uint8_t FL_Bumper(void){
+
+uint8_t FL_Bumper(void) {
     static int prev = 0;
     static int count = 0;
-        ES_Event bump_event;
+    ES_Event bump_event;
     uint8_t returnVal = FALSE;
 
-    int curr = (int)AD_ReadADPin(FL_BUMPER_PIN)>BUMPER_HIGH;
-        
+    int curr = (int) AD_ReadADPin(FL_BUMPER_PIN) > BUMPER_HIGH;
+
 
     if (curr == prev) {
         count = 0;
@@ -346,24 +427,24 @@ uint8_t FL_Bumper(void){
                 bump_event.EventType = BUMP_DETECTED;
                 bump_event.EventParam = FL;
                 returnVal = TRUE;
-            }
-            else{
+            } else {
                 bump_event.EventType = BUMP_LOST;
                 bump_event.EventParam = FL;
                 returnVal = TRUE;
-            }      
-            
+            }
+
         }
     }
-        return returnVal;
+    return returnVal;
 }
-uint8_t BR_Bumper(void){
+
+uint8_t BR_Bumper(void) {
     static int prev = 0;
     static int count = 0;
-     ES_Event bump_event;
-      uint8_t returnVal = FALSE;
+    ES_Event bump_event;
+    uint8_t returnVal = FALSE;
 
-    int curr = (int)AD_ReadADPin(BR_BUMPER_PIN)>BUMPER_HIGH;
+    int curr = (int) AD_ReadADPin(BR_BUMPER_PIN) > BUMPER_HIGH;
 
 
     if (curr == prev) {
@@ -377,25 +458,25 @@ uint8_t BR_Bumper(void){
                 bump_event.EventType = BUMP_DETECTED;
                 bump_event.EventParam = BR;
                 returnVal = TRUE;
-                
-            }
-            else{
+
+            } else {
                 bump_event.EventType = BUMP_LOST;
                 bump_event.EventParam = BR;
                 returnVal = TRUE;
-            }      
-            
+            }
+
         }
     }
     return returnVal;
 }
-uint8_t BL_Bumper(void){
-         ES_Event bump_event;
-uint8_t returnVal = FALSE;
+
+uint8_t BL_Bumper(void) {
+    ES_Event bump_event;
+    uint8_t returnVal = FALSE;
     static int prev = 0;
     static int count = 0;
-    int curr = (int)AD_ReadADPin(BR_BUMPER_PIN)>BUMPER_HIGH;
-      
+    int curr = (int) AD_ReadADPin(BR_BUMPER_PIN) > BUMPER_HIGH;
+
 
     if (curr == prev) {
         count = 0;
@@ -408,18 +489,18 @@ uint8_t returnVal = FALSE;
                 bump_event.EventType = BUMP_DETECTED;
                 bump_event.EventParam = BL;
                 returnVal = TRUE;
-            }
-            else{
+            } else {
                 bump_event.EventType = BUMP_LOST;
                 bump_event.EventParam = BL;
                 returnVal = TRUE;
-            }      
-            
+            }
+
         }
     }
     return returnVal;
 }
-uint8_t check_bumpers(void){
+
+uint8_t check_bumpers(void) {
     FR_Bumper();
     FL_Bumper();
     BR_Bumper();
